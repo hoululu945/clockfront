@@ -1,0 +1,50 @@
+<!-- pages/tab1/tab1.wxml -->
+
+<view class="container">
+ <!-- 页面标题 -->
+ <view class="page-title">{{title}}</view>
+
+
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <input class="search-input" bindinput="handleSearchInput" placeholder="请输入商品名称" />
+    <button bindtap="handleSearch" type="primary" size="mini"> 搜索</button>
+  </view>
+
+  <!-- 搜索结果列表 -->
+  <!-- <view class="result-list">
+    <block wx:for="{{searchResult}}">
+      <view class="result-item">
+      
+       <label class="item-label">名称：</label>   <view class="item-name">{{item.name}}</view>
+       <label class="item-label">备注:</label>   <view class="item-name">{{item.remarks}}</view>
+
+       <label class="item-label">数量：</label> <view class="item-quantity">{{item.num}}</view>
+       <label class="item-label">图片：</label> <image class="item-image" src="{{item.imageUrl}}" data-image-url="{{item.imageUrl}}" bindtap="handlePreviewImage" />
+      </view>
+    </block>
+  </view> -->
+  <view class="product-container">
+  <block wx:for="{{searchResult}}" wx:key="index">
+    <view class="product-item-son" wx:if="{{searchResult.length === 1}}">
+      <image class="product-image" src="{{item.imageUrl}}" mode="aspectFit" data-image-url="{{item.imageUrl}}" bindtap="handlePreviewImage" ></image>
+      <view class="product-info">
+        <text class="product-name">名称:{{item.name}}</text>
+        <text class="product-quantity">数量: {{item.num}}</text>
+        <text class="product-quantity">描述: {{item.remarks}}</text>
+
+      </view>
+    </view>
+    
+    <view class="product-item" wx:else>
+      <image class="product-image" src="{{item.imageUrl}}" mode="aspectFit" data-image-url="{{item.imageUrl}}" bindtap="handlePreviewImage" ></image>
+      <view class="product-info">
+        <text class="product-name">名称:{{item.name}}</text>
+        <text class="product-quantity">数量: {{item.num}}</text>
+        <text class="product-quantity">描述: {{item.remarks}}</text>
+
+      </view>
+    </view>
+  </block>
+</view>
+</view>

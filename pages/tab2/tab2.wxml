@@ -1,0 +1,43 @@
+<!-- pages/tab2/tab2.wxml -->
+
+<view class="container">
+  <view class="page-title">{{title}}</view>
+  <form bindsubmit="onSubmit">
+    <view class="form-group">
+      <input type="text" id="productName"   placeholder="请输入商品名称" bindinput="onInput" value="{{productName}}" />
+    </view>
+
+    <view class="form-group">
+    
+      <input type="number" id="productPrice" placeholder="请输入商品数量" bindinput="onInput" value="{{productPrice}}" />
+    </view>
+   
+   
+    <view class="form-group">
+      <input id="productDescription" placeholder="请输入商品描述" bindinput="onInput" value="{{productDescription}}"/>
+    </view>
+    <!-- <view class="form-group">
+      <button class="scan-button" bindtap="handleScan">扫描图片</button>
+  <view wx:if="{{detail}}">
+    <text class="detail">商品名称：{{detail}}</text>
+  </view>
+
+</view> -->
+    <view class="form-group">
+    
+      <button class="upload-button" bindtap="chooseImage">选择图片</button>
+      <view class="image-container">
+
+      <image class="preview-image" src="{{imageUrl}}" mode="aspectFit" bindtap="handlePreviewImage"></image>
+      </view>
+    </view>
+
+    <!-- <button formType="submit" class="mini-btn" type="warn" size="mini">提交</button> -->
+    <!-- <view class="button-sp-area"> -->
+      <view class="subb">
+        <button class="subgoods" formType="submit"  type="primary" plain="true">提交</button>
+
+      </view>
+
+  </form>
+</view>
