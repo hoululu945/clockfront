@@ -3,6 +3,6 @@
   "projectname": "record",
   "setting": {
     "compileHotReLoad": true,
-    "urlCheck": true
+    "urlCheck": false
   }
 }
