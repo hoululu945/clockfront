@@ -1,5 +1,5 @@
 // pages/tab2/tab2.js
-
+var utils = require('../../utils/util.js');
 Page({
   data: {
     productName: '',
@@ -7,10 +7,19 @@ Page({
     productDescription: '',
     imageUrl: '',
     title:'添加商品',
-    detail:''
+    detail:'',
+    domain:''
   },
 
- 
+  onLoad: function(options) {
+    const appInstance = getApp();
+
+    // 访问全局变量
+    const apiUrl = appInstance.globalData.apiUrl;
+    this.setData({
+      domain:apiUrl
+    })
+  },
   handleScan() {
     wx.showLoading({
       title: '正在初始化...',
@@ -130,15 +139,7 @@ Page({
   },
 
   chooseImage() {
-    wx.chooseImage({
-      count: 1,
-      success: (res) => {
-        const tempFilePaths = res.tempFilePaths;
-        this.setData({
-          imageUrl: tempFilePaths[0]
-        });
-      }
-    });
+    utils.chooseImage(this)
   },
 // 预览图片
  handlePreviewImage() {
@@ -157,60 +158,36 @@ Page({
     const { productName, productPrice, productDescription, imageUrl } = this.data;
     console.log("test-----"+JSON.stringify(this.data))
     // 先上传图片
-    wx.uploadFile({
-      url: 'http://154.83.15.174:8082/api/goodsImage/upload',
-      filePath: imageUrl,
-      name: 'file',
-      success: (res) => {
-        console.log(res.data)
-        const imageUrl = JSON.parse(res.data).imageUrl; // 从响应中获取上传后的图片 URL
-
-        // 发送商品信息和图片 URL 到后端接口
-        wx.request({
-          url: 'http://154.83.15.174:8082/api/goods/add',
-          method: 'POST',
-          data: {
-            name:productName,
-            num:parseInt(productPrice),
-            remarks:productDescription,
-            imageUrl:imageUrl
-          },
-          success: (res) => {
-            // 提交成功后，可以进行相应的提示或页面跳转等操作
-            wx.showToast({
-              title: '提交成功',
-              icon: 'success',
-              duration: 2000,
-              success: () => {
-                // 清空表单数据和图片
-                this.setData({
-                  productName: '',
-                  productPrice: '',
-                  productDescription: '',
-                  imageUrl: ''
-                });
-              }
-            });
-          },
-          fail: (res) => {
-            // 提交失败的处理
-            wx.showToast({
-              title: '提交失败',
-              icon: 'none',
-              duration: 2000
-            });
-          }
+    var data = {
+      name:productName,
+      num:parseInt(productPrice),
+      remarks:productDescription,
+      imageUrl:imageUrl,
+      openid:wx.getStorageSync('openId')
+    }
+    utils.requestAdd(this,data,"/api/goods/add",function(err, res,thisP) {
+      if (err) {
+        console.error("提交失败", err);
+        // 处理错误情况
+      } else {
+        console.log("提交成功", res);
+        thisP.setData({
+          productName: '',
+          productPrice: '',
+          productDescription: '',
+          imageUrl: ''
         });
-      },
-      fail: (res) => {
-        console.log(res.errMsg)
-        // 图片上传失败的处理
-        wx.showToast({
-          title: '图片上传失败',
-          icon: 'none',
-          duration: 2000
-        });
+        // 处理成功响应
       }
-    });
+    })
+
+     
+        
+
+
+      
+  
   }
+
+  
 });

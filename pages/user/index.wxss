@@ -1,0 +1,35 @@
+/* my.wxss */
+.container {
+  padding: 20rpx;
+}
+
+.profile {
+  margin-bottom: 20rpx;
+}
+
+.nickname {
+  font-size: 24rpx;
+  font-weight: bold;
+}
+
+.action {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.email {
+  font-size: 16rpx;
+  color: #999;
+}
+
+.modify-btn {
+  background-color: #007AFF;
+  color: #FFF;
+  border-radius: 4rpx;
+  padding: 10rpx 20rpx;
+}
+
+.page-title{
+  margin-top: 10%;
+}

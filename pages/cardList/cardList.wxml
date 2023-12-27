@@ -1,0 +1,39 @@
+<!-- pages/tab1/tab1.wxml -->
+
+<view class="container">
+ <!-- 页面标题 -->
+ <view class="page-title">{{title}}</view>
+
+
+  <!-- 搜索框 -->
+  <view class="search-box">
+    <input class="search-input" bindinput="handleSearchInput" placeholder="请输入描述信息" />
+    <button bindtap="handleSearch" type="primary" size="mini"> 搜索</button>
+    <button bindtap="goToClock" type="primary" size="mini"> 打卡</button>
+
+  </view>
+
+  <view class="product-container">
+  <block wx:for="{{searchResult}}" wx:key="index" >
+    <view class="product-item-son" wx:if="{{searchResult.length === 1}}" data-item-id="{{item.id}}">
+      <image class="product-image" src="{{item.cardImage}}" mode="aspectFit" data-image-url="{{item.cardImage}}" bindtap="handlePreviewImage" ></image>
+      <view class="product-info" bindtap="goToDetail" data-id="{{item.id}}">
+        <text class="product-quantity">描述: {{item.describe}}</text>
+        <text class="product-quantity">日期: {{item.created_at}}</text>
+
+      </view>
+    </view>
+    
+    <view class="product-item" data-item-id="{{item.id}}"  wx:else>
+      <image class="product-image" src="{{item.cardImage}}" mode="aspectFit" data-image-url="{{item.cardImage}}" bindtap="handlePreviewImage" ></image>
+      <view class="product-info" bindtap="goToDetail" data-id="{{item.id}}">
+
+        <text class="product-quantity">描述: {{item.describe}}</text>
+        <text class="product-quantity">日期: {{item.CreatedAt}}</text>
+
+
+      </view>
+    </view>
+  </block>
+</view>
+</view>

@@ -1,0 +1,12 @@
+<!-- my.wxml -->
+<view class="container">
+  <view class="page-title">{{title}}</view>
+
+  <view class="profile">
+    <text class="nickname">{{nickname}}</text>
+  </view>
+  <view class="action">
+    <input class="email-input" placeholder="请输入邮箱" bindinput="emailInput" value="{{emailInputValue}}"></input>
+    <button class="modify-btn" bindtap="modifyEmail">修改邮箱</button>
+  </view>
+</view>

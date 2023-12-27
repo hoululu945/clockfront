@@ -1,0 +1,84 @@
+/* pages/tab2/tab2.wxss */
+
+
+
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-group{
+  margin-bottom: 60px;
+  width: 300px;
+}
+
+button.subgoods{
+  margin-top: 30rpx;
+  margin-bottom: 10%;
+}
+.button-sp-area{
+  margin: 0 auto;
+  width: 60%;
+}
+.mini-btn{
+  margin-right: 10rpx;
+}
+
+
+button.upload-button{
+  margin-left: 0px;
+  width: 120px;
+}
+
+
+
+.preview-image {
+  width: 200px;
+  height: 200px;
+  margin-left: 0px;
+  cursor: pointer;
+}
+.page-title{
+  margin-top: 0%;
+}
+.subb{
+
+  display: flex;
+  align-items: center;
+
+
+
+  
+}
+
+
+.nav-title {
+
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: bold;
+  text-align: center;
+}
+.back-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  background-color: green;
+  color: #ffffff;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  padding: 10rpx;
+  margin-right: 10rpx;
+  border: none;
+  background-color: transparent;
+  color: #ffffff;
+}

@@ -1,0 +1,51 @@
+/* pages/detail/index.wxss */
+
+.nav-title {
+
+  flex: 1;
+  font-size: 30rpx;
+  font-weight: bold;
+  text-align: center;
+}
+.back-icon {
+  width: 50rpx;
+  height: 50rpx;
+}
+.nav-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx;
+  background-color: green;
+  color: #ffffff;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  padding: 10rpx;
+  margin-right: 10rpx;
+  border: none;
+  background-color: transparent;
+  color: #ffffff;
+}
+
+.show-map-container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100vh;
+  width: 100%;
+  background: #F8F8F7;
+}
+.introduce {
+	padding-top: 20px;
+}
+.map-container {
+	position: relative;
+	flex: 1;
+	overflow: hidden;
+  margin-top: 30%;
+  margin-bottom:0px;
+  width: 100%;
+}

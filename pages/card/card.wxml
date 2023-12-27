@@ -1,0 +1,33 @@
+<!-- pages/tab2/tab2.wxml -->
+
+<view class="container">
+  <!-- <view class="nav-bar">
+    <button class="back-btn" bindtap="goBack">
+      <image class="back-icon" src="/assets/tab-bar/back.png"></image>
+    </button>
+    <view class="nav-title">打卡</view>
+  </view> -->
+  <view class="page-title">{{title}}</view>
+  <form bindsubmit="onSubmit">
+    <view class="form-group">
+      <input type="text" id="description"   placeholder="请输入描述信息" bindinput="onInput" value="{{description}}" />
+    </view>
+
+
+    <view class="form-group">
+    
+      <button class="upload-button" bindtap="chooseImage">选择图片</button>
+      <view class="image-container">
+
+      <image class="preview-image" src="{{imageUrl}}" mode="aspectFit" bindtap="handlePreviewImage"></image>
+      </view>
+    </view>
+
+
+      <view class="subb">
+        <button class="subgoods" formType="submit"  type="primary" plain="true">提交打卡</button>
+
+      </view>
+
+  </form>
+</view>

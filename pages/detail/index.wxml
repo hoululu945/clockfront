@@ -1,0 +1,22 @@
+<view class="show-map-container">
+
+
+<view class="map-container">
+
+  <!-- <view class="nav-bar">
+    <button class="back-btn" bindtap="goBack">
+      <image class="back-icon" src="/assets/tab-bar/back.png"></image>
+    </button>
+    <view class="nav-title">详情</view>
+  </view> -->
+  <view style="width: 100%; height: 500px;">
+
+  <map markers="{{markers}}" style="width: 100%; height: 100%;" id="myMap" longitude="{{ longitude }}" latitude="{{ latitude }}"  show-location="true" id="map"
+    class="map"
+    polyline="{{polyline}}"></map>
+</view>
+
+
+</view>
+<!-- <button size="mini" bindtap="buttonSearch">检索“美食”</button> -->
+</view>

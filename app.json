@@ -1,10 +1,28 @@
 {
+  
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
 
-    "pages/tab2/tab2"
+    "pages/tab2/tab2",
+    "pages/clock/index",
+    "pages/clock2/index",
+
+    "pages/detail/index",
+    "pages/card/card",
+    "pages/cardList/cardList",
+    "pages/user/index",
+    "pages/map/marker"
+
+
+
+
   ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于小程序地图展示"
+    }
+  },
   "tabBar": {
     "color": "#999999",
     "selectedColor": "#007AFF",
@@ -13,16 +31,29 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "列表",
-        "iconPath": "assets/tab-bar/home.png",
-        "selectedIconPath": "assets/tab-bar/home-selected.png"
+        "text": "物品",
+        "iconPath": "assets/tab-bar/chalkbag.png",
+        "selectedIconPath": "assets/tab-bar/chalkbag.png"
       },
       {
-        "pagePath": "pages/tab2/tab2",
-        "text": "添加",
-        "iconPath": "assets/tab-bar/tab2.png",
-        "selectedIconPath": "assets/tab-bar/tab2-selected.png"
+        "pagePath": "pages/clock/index",
+        "text": "闹钟",
+        "iconPath": "assets/tab-bar/smart-watch.png",
+        "selectedIconPath": "assets/tab-bar/smart-watch.png"
+      },
+      {
+        "pagePath": "pages/cardList/cardList",
+        "text": "打卡",
+        "iconPath": "assets/tab-bar/location.png",
+        "selectedIconPath": "assets/tab-bar/location.png"
+      } ,
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的",
+        "iconPath": "assets/tab-bar/pick-axe.png",
+        "selectedIconPath": "assets/tab-bar/pick-axe.png"
       }
+    
     ]
   },
   "window": {
@@ -40,5 +71,13 @@
   },
   "componentFramework": "glass-easel",
   "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "requiredPrivateInfos": [
+    "chooseAddress",
+    "chooseLocation",
+    "choosePoi",
+    "getLocation"
+    
+  ]
+    
 }

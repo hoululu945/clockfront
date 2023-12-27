@@ -1,0 +1,52 @@
+<!-- pages/tab2/tab2.wxml -->
+
+<view class="container">
+  <view class="page-title">{{title}}</view>
+  <form bindsubmit="onSubmit">
+
+    <view class="form-group">
+      <input id="title" placeholder="请输入标题" bindinput="onInput" value="{{title}}"/>
+    </view>
+   
+    <view class="form-group">
+      <input id="productDescription" placeholder="请输入闹钟描述" bindinput="onInput" value="{{productDescription}}"/>
+    </view>
+    <view class="form-group">
+  <picker mode="date" value="{{date}}" start="2021-10-22" end="2060-09-01" bindchange="bindDateChange">
+    <view class="picker">
+      当前选择: {{date}}
+    </view>
+  </picker>
+</view>
+<view class="form-group">
+  <picker mode="time" value="{{time}}" start="09:01" end="21:01" bindchange="bindDatetimeChange">
+    <view class="picker">
+      当前选择: {{time}}
+    </view>
+  </picker>
+</view>
+    <!-- <view class="form-group">
+      <button class="scan-button" bindtap="handleScan">扫描图片</button>
+  <view wx:if="{{detail}}">
+    <text class="detail">商品名称：{{detail}}</text>
+  </view>
+
+</view> -->
+    <view class="form-group">
+    
+      <button class="upload-button" bindtap="chooseImage">选择图片</button>
+      <view class="image-container">
+
+      <image class="preview-image" src="{{imageUrl}}" mode="aspectFit" bindtap="handlePreviewImage"></image>
+      </view>
+    </view>
+
+    <!-- <button formType="submit" class="mini-btn" type="warn" size="mini">提交</button> -->
+    <!-- <view class="button-sp-area"> -->
+      <view class="subb">
+        <button class="subgoods" formType="submit"  type="primary" plain="true">提交</button>
+
+      </view>
+
+  </form>
+</view>

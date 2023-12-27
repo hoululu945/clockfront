@@ -9,6 +9,8 @@
   <view class="search-box">
     <input class="search-input" bindinput="handleSearchInput" placeholder="请输入商品名称" />
     <button bindtap="handleSearch" type="primary" size="mini"> 搜索</button>
+    <button bindtap="goToClock1" type="primary" size="mini"> 记录</button>
+
   </view>
 
   <!-- 搜索结果列表 -->
@@ -42,8 +44,9 @@
         <text class="product-name">名称:{{item.name}}</text>
         <text class="product-quantity">数量: {{item.num}}</text>
         <text class="product-quantity">描述: {{item.remarks}}</text>
+        <text class="product-quantity">日期: {{item.CreatedAt}}</text>
 
-      </view>
+        </view>
     </view>
   </block>
 </view>
