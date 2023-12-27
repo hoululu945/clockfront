@@ -231,6 +231,42 @@ const handleSearch = (thisP,path,param) => {
 
 
 }
+
+const handleGet = (thisP,path,data,callback) => {
+    
+  let openId = wx.getStorageSync('openId');
+  var _this = thisP
+
+wx.cloud.callContainer({
+  config: {
+    env: "prod-8ga1z8a47d2e61f1"
+  },
+  path: path,
+  header: {
+        'content-type': 'application/json',
+        'openid': wx.getStorageSync('openid'),
+        "X-WX-SERVICE": "golang-vvm6"
+  },
+  method: "GET",
+  data: data,
+  success: function(res) {
+
+    if (callback && typeof callback === 'function') {
+      callback(null, res,thisP); // 将响应作为第二个参数传递
+    }
+  },
+  fail: function(err) {
+    // 失败回调函数
+    console.error("API调用失败", err);
+    if (callback && typeof callback === 'function') {
+      callback(err,thisP); // 将错误作为第一个参数传递
+    }
+  }
+});
+
+
+
+}
 const chooseImage = (thisP) => {
   var _this = thisP
   wx.chooseImage({
@@ -370,5 +406,6 @@ module.exports = {
   upload:upload,
   chooseImage:chooseImage,
   requestAdd:requestAdd,
-  handleSearch:handleSearch
+  handleSearch:handleSearch,
+  handleGet:handleGet
 };

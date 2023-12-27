@@ -35,23 +35,17 @@ Page({
     getLocation(event){
       const { description, imageUrl } = this.data;
 
-        // 在小程序中获取用户位置信息
-      wx.getLocation({
-        type: 'wgs84', // 返回可以用于wx.openLocation的经纬度
-        success: function (res) {
-          wx.setStorageSync('latitude', res.latitude);
-          wx.setStorageSync('longitude', res.longitude);
+        // 在小程序中获取用户位置信息待官方审核
+      // wx.getLocation({
+      //   type: 'wgs84', // 返回可以用于wx.openLocation的经纬度
+      //   success: function (res) {
+          wx.setStorageSync('latitude', "38.09");
+          wx.setStorageSync('longitude', "117.9");
 
-          var speed = res.speed
-          var accuracy = res.accuracy
-          // this.setData({
-          //   latitude:latitude,
-          //   longitude:longitude
-          // })
-        },  fail: (err) => {
-          console.log(err);
-        }
-      })
+        // },  fail: (err) => {
+        //   console.log(err);
+        // }
+      // })
 
     },
   handleScan() {
