@@ -9,6 +9,14 @@ Page({
     userId:'',
     domain:''
   },
+  onShow: function() {
+    // 页面显示时执行的操作
+    console.log('页面已显示****************');
+    
+    // 在这里可以进行页面刷新操作或数据加载操作
+    this.handleSearch();
+
+  },
   onLoad: function(options) {
     const appInstance = getApp();
 
@@ -49,9 +57,12 @@ Page({
 // 预览图片
 handlePreviewImage(event) {
   const imageUrl = event.currentTarget.dataset.imageUrl;
-  wx.previewImage({
-    urls: [imageUrl],
-  });
+    if(!(imageUrl===""||imageUrl===undefined)){
+
+    wx.previewImage({
+      urls: [imageUrl],
+    });
+  }
 },
   // 执行搜索
   clock() {

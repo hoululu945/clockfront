@@ -120,18 +120,18 @@ Page({
             markers:markers
           })
           //待官方审核
-          wx.getLocation({
-            type: 'gcj02', // 使用国测局坐标系
-            success: (res2) => {
-              const { longitude, latitude } = res2;
-              thisP.driving(res.data.detail.lon,res.data.detail.lat,longitude,thisP.data.latitude);
+          // wx.getLocation({
+          //   type: 'gcj02', // 使用国测局坐标系
+          //   success: (res2) => {
+          //     const { longitude, latitude } = res2;
+          //     thisP.driving(res.data.detail.lon,res.data.detail.lat,longitude,thisP.data.latitude);
   
-              thisP.setData({
-                longitude,
-                latitude
-              });
-            }
-          });
+          //     thisP.setData({
+          //       longitude,
+          //       latitude
+          //     });
+          //   }
+          // });
           thisP.driving(res.data.detail.lon,res.data.detail.lat,thisP.data.longitude,thisP.data.latitude);
            console.log("dd1dwwdap11-----"+res.data.detail.lat+res.data.detail.lon+JSON.stringify(thisP.data))
         
@@ -237,16 +237,16 @@ Page({
     console.log("detail222----"+id);
     // this.handleDetail();
     // 获取位置信息待官方审核审核
-    wx.getLocation({
-      type: 'gcj02', // 使用国测局坐标系
-      success: (res) => {
-        const { longitude, latitude } = res;
-        this.setData({
-          longitude,
-          latitude
-        });
-      }
-    });
+    // wx.getLocation({
+    //   type: 'gcj02', // 使用国测局坐标系
+    //   success: (res) => {
+    //     const { longitude, latitude } = res;
+    //     this.setData({
+    //       longitude,
+    //       latitude
+    //     });
+    //   }
+    // });
 
     // 添加标记点
     var marker = {

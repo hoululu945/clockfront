@@ -226,7 +226,26 @@ Page({
           productDescription: '',
           imageUrl: ''
         });
-        wx.navigateBack();
+              wx.showToast({
+              title: '提交成功',
+              icon: 'success',
+              duration: 2000,
+              success: () => {
+                // 清空表单数据和图片
+                thisP.setData({
+                  productName: '',
+                  productPrice: '',
+                  productDescription: '',
+                  imageUrl: ''
+                });
+                setTimeout(function() {
+                  wx.navigateBack({
+                    delta: 1 // 返回的页面数，1表示返回上一页，2表示返回上两页，以此类推
+                  });
+                }, 1000); // 设置延迟的毫秒数，例如延迟2秒返回
+
+              }
+            });
 
         // 处理成功响应
       }

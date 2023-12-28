@@ -19,7 +19,7 @@
       <image class="product-image" src="{{item.cardImage}}" mode="aspectFit" data-image-url="{{item.cardImage}}" bindtap="handlePreviewImage" ></image>
       <view class="product-info" bindtap="goToDetail" data-id="{{item.id}}">
         <text class="product-quantity">描述: {{item.describe}}</text>
-        <text class="product-quantity">日期: {{item.created_at}}</text>
+        <text class="product-quantity">日期: {{item.CreatedAt}}</text>
 
       </view>
     </view>

@@ -36,16 +36,16 @@ Page({
       const { description, imageUrl } = this.data;
 
         // 在小程序中获取用户位置信息待官方审核
-      wx.getLocation({
-        type: 'wgs84', // 返回可以用于wx.openLocation的经纬度
-        success: function (res) {
-          wx.setStorageSync('latitude', "38.09");
-          wx.setStorageSync('longitude', "117.9");
+      // wx.getLocation({
+      //   type: 'wgs84', // 返回可以用于wx.openLocation的经纬度
+      //   success: function (res) {
+      //     wx.setStorageSync('latitude', "38.09");
+      //     wx.setStorageSync('longitude', "117.9");
 
-        },  fail: (err) => {
-          console.log(err);
-        }
-      })
+      //   },  fail: (err) => {
+      //     console.log(err);
+      //   }
+      // })
 
     },
   handleScan() {
@@ -203,14 +203,28 @@ utils.requestAdd(this,data,"/api/card/add",function(err, res,thisP) {
   } else {
     console.log("提交成功", res);
     // 处理成功响应
-    thisP.setData({
-                productName: '',
-                productPrice: '',
-                productDescription: '',
-                imageUrl: ''
-              });
-              wx.navigateBack();
 
+              wx.showToast({
+                title: '提交成功',
+                icon: 'success',
+                duration: 2000,
+                success: () => {
+                  // 清空表单数据和图片
+                  thisP.setData({
+                    productName: '',
+                    productPrice: '',
+                    productDescription: '',
+                    imageUrl: ''
+                  });
+                  setTimeout(function() {
+                    wx.navigateBack({
+                      delta: 1 // 返回的页面数，1表示返回上一页，2表示返回上两页，以此类推
+                    });
+                  }, 1000); // 设置延迟的毫秒数，例如延迟2秒返回
+  
+                }
+              });
+  
   }
 })
         // 发送商品信息和图片 URL 到后端接口

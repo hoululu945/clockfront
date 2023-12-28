@@ -25,6 +25,14 @@ this.setData({
     this.handleSearch();
 
   },
+  onShow: function() {
+    // 页面显示时执行的操作
+    console.log('页面已显示****************');
+    
+    // 在这里可以进行页面刷新操作或数据加载操作
+    this.handleSearch();
+
+  },
   formatDates(objs) {
     return objs.map(item => {
       const date = new Date(item.CreatedAt); // 使用 Date 对象解析输入的时间字符串
@@ -40,42 +48,60 @@ this.setData({
       return item; // 返回 "YYYY-MM-DD" 格式的日期字符串
     });
   },
-  triggerSubscribeModal:function() {
+  triggerSubscribeModal: function() {
+    console.log("订阅success---------------------");
+  
     wx.requestSubscribeMessage({
-      tmplIds: ['_-TV_81Or0oM9IqLn2oi5APXx7PS10GrSY8fhS0xeig','WOyG-68WmFf1UXpSYlxiEUOBkBcnfpqcJ2GVR2drJ84'], // 替换为实际的模板 ID
+      tmplIds: ['XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk', 'VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE'], // 替换为实际的模板 ID
       success: function(res) {
-        if (res['WOyG-68WmFf1UXpSYlxiEUOBkBcnfpqcJ2GVR2drJ84'] === 'accept' || res['_-TV_81Or0oM9IqLn2oi5APXx7PS10GrSY8fhS0xeig'] === 'accept') {
+        console.log("订阅success---------------------");
+        if (res['XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk'] === 'accept' || res['VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE'] === 'accept') {
           wx.setStorageSync('is_sub', 1);
-
-        } 
-      
+        }
       },
-
     });
-    // var is_sub = wx.getStorageSync('is_sub')
-    // console.log("log----is_sub---"+is_sub)
-
-    // wx.showModal({
-    //   title: '订阅消息',
-    //   content: '是否订阅消息通知？',
-    //   success: function(res) {
-    //     if (res.confirm) {
-    //       // 用户点击了确定按钮，触发订阅弹框
-    //       wx.requestSubscribeMessage({
-    //         tmplIds: ['_-TV_81Or0oM9IqLn2oi5APXx7PS10GrSY8fhS0xeig','WOyG-68WmFf1UXpSYlxiEUOBkBcnfpqcJ2GVR2drJ84'], // 替换为实际的模板 ID
-    //         success: function(res) {
-    //           if (res['WOyG-68WmFf1UXpSYlxiEUOBkBcnfpqcJ2GVR2drJ84'] === 'accept' || res['_-TV_81Or0oM9IqLn2oi5APXx7PS10GrSY8fhS0xeig'] === 'accept') {
-    //             wx.setStorageSync('is_sub', 1);
-
-    //           } 
-            
-    //         },
-
-    //       });
-    //     }
-    //   }
-    // });
+  
+  
   },
+  // triggerSubscribeModal:function() {
+  //   console.log("訂閲success---------------------");
+
+  //   wx.requestSubscribeMessage({
+  //     tmplIds: ['XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk','VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE'], // 替换为实际的模板 ID
+  //     success: function(res) {
+  //       console.log("訂閲success---------------------");
+  //       if (res['XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk'] === 'accept' || res['VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE'] === 'accept') {
+  //         wx.setStorageSync('is_sub', 1);
+
+  //       } 
+      
+  //     },
+
+  //   });
+  //   // var is_sub = wx.getStorageSync('is_sub')
+  //   // console.log("log----is_sub---"+is_sub)
+
+  //   // wx.showModal({
+  //   //   title: '订阅消息',
+  //   //   content: '是否订阅消息通知？',
+  //   //   success: function(res) {
+  //   //     if (res.confirm) {
+  //   //       // 用户点击了确定按钮，触发订阅弹框
+  //   //       wx.requestSubscribeMessage({
+  //   //         tmplIds: ['_-TV_81Or0oM9IqLn2oi5APXx7PS10GrSY8fhS0xeig','WOyG-68WmFf1UXpSYlxiEUOBkBcnfpqcJ2GVR2drJ84'], // 替换为实际的模板 ID
+  //   //         success: function(res) {
+  //   //           if (res['WOyG-68WmFf1UXpSYlxiEUOBkBcnfpqcJ2GVR2drJ84'] === 'accept' || res['_-TV_81Or0oM9IqLn2oi5APXx7PS10GrSY8fhS0xeig'] === 'accept') {
+  //   //             wx.setStorageSync('is_sub', 1);
+
+  //   //           } 
+            
+  //   //         },
+
+  //   //       });
+  //   //     }
+  //   //   }
+  //   // });
+  // },
 
   
   // 监听搜索框输入
@@ -88,9 +114,13 @@ this.setData({
 // 预览图片
 handlePreviewImage(event) {
   const imageUrl = event.currentTarget.dataset.imageUrl;
-  wx.previewImage({
-    urls: [imageUrl],
-  });
+      if(!(imageUrl===""||imageUrl===undefined)){
+
+
+      wx.previewImage({
+        urls: [imageUrl],
+      });
+    }
 },
   // 执行搜索
   clock() {

@@ -428,7 +428,7 @@ function setCache(key,token,expireTime){
 function getCache(key){
   // 读取缓存数据
   var cacheData = wx.getStorageSync(key);
-  var token = "";
+  var token = cacheData.data;
   // 判断缓存是否存在且未过期
   if (cacheData && cacheData.expireTime > Date.now()) {
     console.log('缓存未过期');
@@ -437,6 +437,7 @@ function getCache(key){
     console.log('缓存数据11111111*****:', cacheData.data);
   } else {
     console.log('缓存已过期或不存在');
+    token = "";
     // 执行缓存过期或不存在时的逻辑，例如重新获取数据
   }
   return token;
