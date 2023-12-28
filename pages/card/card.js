@@ -181,6 +181,8 @@ Page({
   },
   chooseImage() {
     utils.chooseImage(this)
+    // utils.uploadImage(tempFilePaths[0],this);
+
   },
   onSubmit(event) {
     // 获取表单数据
@@ -207,6 +209,8 @@ utils.requestAdd(this,data,"/api/card/add",function(err, res,thisP) {
                 productDescription: '',
                 imageUrl: ''
               });
+              wx.navigateBack();
+
   }
 })
         // 发送商品信息和图片 URL 到后端接口

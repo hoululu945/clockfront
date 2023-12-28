@@ -149,7 +149,7 @@ const requestAdd = (thisP,data,path,callback) =>{
               if (callback && typeof callback === 'function') {
                 callback(null, res,thisP); // 将响应作为第二个参数传递
               }
-              wx.navigateBack();
+              // wx.navigateBack();
     },
     fail: function(err) {
       // 失败回调函数
@@ -234,8 +234,6 @@ const handleSearch = (thisP,path,param) => {
 
 const handleGet = (thisP,path,data,callback) => {
     
-  let openId = wx.getStorageSync('openId');
-  var _this = thisP
 
 wx.cloud.callContainer({
   config: {
@@ -269,54 +267,60 @@ wx.cloud.callContainer({
 }
 const chooseImage = (thisP) => {
   var _this = thisP
+  console.log("qiniu-----------222222222-----------")
+
   wx.chooseImage({
     count: 1,
     success: (res) => {
       const tempFilePaths = res.tempFilePaths;
-      wx.cloud.uploadFile({
-        config: {
-          env: "prod-8ga1z8a47d2e61f1"
-        },
-        cloudPath: 'images/' + Date.now() + '-' + Math.floor(Math.random() * 1000),  // 设置云存储的文件路径和文件名
-        filePath: tempFilePaths[0],  // 要上传的图片临时路径
-        success: function (res) {
-          // 图片上传成功，返回文件 ID
-          const fileId = res.fileID;
-          console.log('图片上传成功，文件 ID:', fileId);
-  
+      console.log("qiniu----------------------")
+      uploadImage(tempFilePaths[0],thisP)
+      // wx.cloud.uploadFile({
+      //   config: {
+      //     env: "prod-8ga1z8a47d2e61f1"
+      //   },
+      //   cloudPath: 'images/' + Date.now() + '-' + Math.floor(Math.random() * 1000),  // 设置云存储的文件路径和文件名
+      //   filePath: tempFilePaths[0],  // 要上传的图片临时路径
+      //   success: function (res) {
+      //     // 图片上传成功，返回文件 ID
+      //     const fileId = res.fileID;
+      //     console.log('图片上传成功，文件 ID:', fileId);
+      //     _this.setData({
+      //       imageUrl: fileId
+      //     });
 
 
-          wx.cloud.getTempFileURL({
-            fileList: [fileId],
-            success: function (res) {
-              const fileList = res.fileList;
-              if (fileList && fileList.length > 0) {
-                const tempFileURL = fileList[0].tempFileURL;
-                // console.error('获取文件临时链接失败'+tempFileURL);
+      //     // wx.cloud.getTempFileURL({
+      //     //   fileList: [fileId],
+      //     //   success: function (res) {
+      //     //     const fileList = res.fileList;
+      //     //     if (fileList && fileList.length > 0) {
+      //     //       const tempFileURL = fileList[0].tempFileURL;
+      //     //       // console.error('获取文件临时链接失败'+tempFileURL);
 
-                // 在小程序中展示图片
-                _this.setData({
-                  imageUrl: tempFileURL
-                });
-                console.log('util upload 成功');
+      //     //       // 在小程序中展示图片
+      //     //       _this.setData({
+      //     //         imageUrl: tempFileURL
+      //     //       });
+      //     //       console.log('util upload 成功');
 
-              } else {
-                console.error('获取文件临时链接失败');
-              }
-            },
-            fail: function (error) {
-              console.error('获取文件临时链接失败:', error);
-            }
-          });
+      //     //     } else {
+      //     //       console.error('获取文件临时链接失败');
+      //     //     }
+      //     //   },
+      //     //   fail: function (error) {
+      //     //     console.error('获取文件临时链接失败:', error);
+      //     //   }
+      //     // });
 
 
-          // 其他处理逻辑
-        },
-        fail: function (error) {
-          // 图片上传失败，打印错误信息
-          console.error('图片上传失败:', error);
-        }
-      });
+      //     // 其他处理逻辑
+      //   },
+      //   fail: function (error) {
+      //     // 图片上传失败，打印错误信息
+      //     console.error('图片上传失败:', error);
+      //   }
+      // });
 
 
 
@@ -393,8 +397,103 @@ const upload = (filePath,thisP) =>{
 
 
 }
+const handleRequest = (url,method,data,thisP) => {
+
+    wx.request({
+      url: url, // 请求的URL
+      method: method, // 请求方法，GET为默认值
+      data: data,
+      success: function(res) {
+        // 请求成功的处理逻辑
+        console.log('请求成功', res.data);
+      },
+      fail: function(res) {
+        // 请求失败的处理逻辑
+        console.log('请求失败', res);
+      }
+});
 
 
+
+}
+function setCache(key,token,expireTime){
+  var cacheData = {
+    data: token,
+    expireTime: Date.now() + expireTime // 当前时间 + 10分钟的毫秒数
+  };
+  
+  // 设置缓存
+  wx.setStorageSync(key, cacheData);
+}
+function getCache(key){
+  // 读取缓存数据
+  var cacheData = wx.getStorageSync(key);
+  var token = "";
+  // 判断缓存是否存在且未过期
+  if (cacheData && cacheData.expireTime > Date.now()) {
+    console.log('缓存未过期');
+    token = cacheData.data
+    // 执行缓存未过期时的逻辑，使用缓存数据
+    console.log('缓存数据11111111*****:', cacheData.data);
+  } else {
+    console.log('缓存已过期或不存在');
+    // 执行缓存过期或不存在时的逻辑，例如重新获取数据
+  }
+  return token;
+}
+
+function getQiniuToken(thisP){
+  var token = getCache("qiniu_token")
+  console.log("打印缓存########$$$$####"+token)
+  if(token==="" || token === undefined){
+    handleGet(thisP,"/api/qiniu/token",{},function(err,res,thisP){
+      //  console.log(res.data.token+)
+      setCache("qiniu_token",res.data.token,10 * 60 * 1000)
+  
+      console.log("打印缓存############"+res.data.token)
+     })
+  }
+
+   token = getCache("qiniu_token")
+   console.log("打印缓存结果@@@@@@@@"+token)
+  return token;
+}
+// 上传图片
+ const uploadImage = (filePath,thisP) => {
+   console.log("qiniu*****************************")
+   getQiniuToken(thisP)
+  wx.uploadFile({
+    url: 'https://up-z2.qiniup.com', // 上传接口地址
+    filePath: filePath, // 要上传的文件路径
+    name: 'file', // 服务器端接收文件的字段名
+    formData:{
+      "token":getQiniuToken(thisP)
+    },
+    success: function(res) {
+      var data = res.data; // 上传成功后返回的数据
+      
+      // 处理上传成功后的逻辑
+      console.log(res.data+"------1111------------")
+     var hasobj = JSON.parse(res.data)
+      if (typeof hasobj === 'object') {
+        console.log('值是一个对象');
+      } else if (typeof hasobj === 'string') {
+        console.log('值是一个字符串');
+      } else {
+        console.log('值的类型不是对象也不是字符串');
+      }
+      console.log(hasobj.hash+"---------22222---------")
+
+      thisP.setData({
+        imageUrl: "http://s687dm7qx.hn-bkt.clouddn.com/"+hasobj.hash
+      });
+    },
+    fail: function(res) {
+      // 处理上传失败后的逻辑
+      console.log('上传失败', res);
+    }
+  })
+}
 module.exports = {
   formatTime: formatTime,
   formatDates:formatDates,
@@ -407,5 +506,7 @@ module.exports = {
   chooseImage:chooseImage,
   requestAdd:requestAdd,
   handleSearch:handleSearch,
-  handleGet:handleGet
+  handleGet:handleGet,
+  uploadImage:uploadImage
+
 };

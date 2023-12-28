@@ -226,6 +226,8 @@ Page({
           productDescription: '',
           imageUrl: ''
         });
+        wx.navigateBack();
+
         // 处理成功响应
       }
     })
