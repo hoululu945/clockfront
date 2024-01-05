@@ -28,7 +28,7 @@
       <button class="upload-button" bindtap="chooseImage">选择图片</button>
       <view class="image-container">
 
-      <image class="preview-image" src="{{imageUrl}}" mode="aspectFit" bindtap="handlePreviewImage"></image>
+      <image class="preview-image" src="{{tempImageUrl}}" mode="aspectFit" bindtap="handlePreviewImage"></image>
       </view>
     </view>
 

@@ -19,7 +19,12 @@ Page({
   },
   onLoad: function(options) {
     const appInstance = getApp();
-
+    utils.handleGet(this,"/api/qiniu/token",{},function(err,res,thisP){
+      //  console.log(res.data.token+)
+      utils.setCache("qiniu_token",res.data.token,10 * 60 * 1000)
+  
+      console.log("打印缓存############"+res.data.token)
+     })
     const apiUrl = appInstance.globalData.apiUrl;
     this.setData({
       domain:apiUrl

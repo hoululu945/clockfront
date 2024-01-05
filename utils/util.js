@@ -252,6 +252,8 @@ wx.cloud.callContainer({
     if (callback && typeof callback === 'function') {
       callback(null, res,thisP); // 将响应作为第二个参数传递
     }
+    // res.data.token
+    console.log("测试---------------------位置")
   },
   fail: function(err) {
     // 失败回调函数
@@ -273,7 +275,10 @@ const chooseImage = (thisP) => {
     count: 1,
     success: (res) => {
       const tempFilePaths = res.tempFilePaths;
-      console.log("qiniu----------------------")
+      thisP.setData({
+        "tempImageUrl":tempFilePaths[0]
+      })
+      console.log("qiniu----------------------"+tempFilePaths[0])
       uploadImage(tempFilePaths[0],thisP)
       // wx.cloud.uploadFile({
       //   config: {
@@ -444,16 +449,16 @@ function getCache(key){
 }
 
 function getQiniuToken(thisP){
-  var token = getCache("qiniu_token")
-  console.log("打印缓存########$$$$####"+token)
-  if(token==="" || token === undefined){
-    handleGet(thisP,"/api/qiniu/token",{},function(err,res,thisP){
-      //  console.log(res.data.token+)
-      setCache("qiniu_token",res.data.token,10 * 60 * 1000)
+  // var token = getCache("qiniu_token")
+  var token = ""
+  // console.log("打印缓存########$$$$####"+token)
+  // if(token==="" || token === undefined){
+    // handleGet(thisP,"/api/qiniu/token",{},function(err,res,thisP){
+    //   setCache("qiniu_token",res.data.token,10 * 60 * 1000)
   
-      console.log("打印缓存############"+res.data.token)
-     })
-  }
+    //   console.log("打印缓存############"+res.data.token)
+    //  })
+  // }
 
    token = getCache("qiniu_token")
    console.log("打印缓存结果@@@@@@@@"+token)
@@ -508,6 +513,6 @@ module.exports = {
   requestAdd:requestAdd,
   handleSearch:handleSearch,
   handleGet:handleGet,
-  uploadImage:uploadImage
-
+  uploadImage:uploadImage,
+  setCache:setCache
 };

@@ -5,6 +5,7 @@ Page({
   data: {
     description: '',
     imageUrl: '',
+    tempImageUrl:"",
     title:'添加打卡',
     latitude:'',
     longitude:'',
@@ -17,7 +18,7 @@ Page({
   }, 
   onLoad: function(options) {
     const appInstance = getApp();
-
+   
     const apiUrl = appInstance.globalData.apiUrl;
     this.setData({
       domain:apiUrl
@@ -195,6 +196,14 @@ var data = {
   cardImage:imageUrl,
   lat:wx.getStorageSync('latitude').toString(),
   lon:wx.getStorageSync('longitude').toString(),
+}
+if(data["cardImage"] === "" || data["cardImage"]===undefined){
+  wx.showModal({
+    title: '图片必传',
+    content: '请填写完整的参数', 
+    showCancel: false
+  });
+  return;
 }
 utils.requestAdd(this,data,"/api/card/add",function(err, res,thisP) {
   if (err) {

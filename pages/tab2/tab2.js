@@ -6,6 +6,8 @@ Page({
     productPrice: '',
     productDescription: '',
     imageUrl: '',
+    tempImageUrl: '',
+
     title:'添加商品',
     detail:'',
     domain:''
@@ -164,6 +166,14 @@ Page({
       remarks:productDescription,
       imageUrl:imageUrl,
       openid:wx.getStorageSync('openId')
+    }
+    if(data["imageUrl"] === "" || data["imageUrl"]===undefined){
+      wx.showModal({
+        title: '图片必传',
+        content: '请填写完整的参数', 
+        showCancel: false
+      });
+      return;
     }
     utils.requestAdd(this,data,"/api/goods/add",function(err, res,thisP) {
       if (err) {

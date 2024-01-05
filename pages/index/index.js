@@ -12,6 +12,13 @@ Page({
   onLoad: function(options) {
 
     const appInstance = getApp();
+
+    utils.handleGet(this,"/api/qiniu/token",{},function(err,res,thisP){
+      //  console.log(res.data.token+)
+      utils.setCache("qiniu_token",res.data.token,10 * 60 * 1000)
+  
+      console.log("打印缓存############"+res.data.token)
+     })
 // 访问全局变量
 const apiUrl = appInstance.globalData.apiUrl;
 this.setData({
@@ -51,15 +58,26 @@ this.setData({
   triggerSubscribeModal: function() {
     console.log("订阅success---------------------");
   
-    wx.requestSubscribeMessage({
-      tmplIds: ['XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk', 'VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE'], // 替换为实际的模板 ID
+    wx.showModal({
+      title: '订阅消息',
+      content: '是否订阅消息通知？',
       success: function(res) {
-        console.log("订阅success---------------------");
-        if (res['XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk'] === 'accept' || res['VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE'] === 'accept') {
-          wx.setStorageSync('is_sub', 1);
+ 
+          if (res.confirm) {
+            wx.requestSubscribeMessage({
+              tmplIds: ['XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk', 'VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE'], // 替换为实际的模板 ID
+              success: function(res) {
+                console.log("订阅success---------------------");
+                if (res['XKdx0esytPR0ElXybw-d_0VBBBmP-y8I2w7UV8F9uxk'] === 'accept' || res['VbeyooicNuMv4KLVGNiCCmMnWnsTR6snBnykRrvPhIE'] === 'accept') {
+                  wx.setStorageSync('is_sub', 1);
+                }
+              },
+            });
+          
+          }
         }
-      },
-    });
+    })
+
   
   
   },
@@ -218,103 +236,103 @@ handlePreviewImage(event) {
   const domain = this.data.domain
 
  // 调用小程序的登录接口，获取临时登录凭证 code
-  wx.login({
-    success: function (res) {
-      if (res.code) {
-        // 登录成功，获取到临时登录凭证 code
-        const code = res.code;
-        // 调用小程序的获取用户信息接口
-        wx.getUserInfo({
-          success: function (userInfoRes) {
-            // 获取用户信息成功，包括昵称、头像等1
-            const userInfo = userInfoRes.userInfo;
+  // wx.login({
+  //   success: function (res) {
+  //     if (res.code) {
+  //       // 登录成功，获取到临时登录凭证 code
+  //       const code = res.code;
+  //       // 调用小程序的获取用户信息接口
+  //       wx.getUserInfo({
+  //         success: function (userInfoRes) {
+  //           // 获取用户信息成功，包括昵称、头像等1
+  //           const userInfo = userInfoRes.userInfo;
 
-            wx.cloud.callContainer({
-              config: {
-                env: "prod-8ga1z8a47d2e61f1"
-              },
-              path: "/api/user/miniLogin",
-              header: {
-               'content-type': 'application/json',
-                    'openid': "",
-                "X-WX-SERVICE": "golang-vvm6"
-              },
-              method: "POST",
-              data: {
-                 code: code,
-                            userInfo: userInfo
-              },
-              success: function(res) {
-                     console.log(res.data.data)
-                            // 登录成功，后端返回了用户标识1
-                            const userId = res.data.data.openid;
-                            const email = res.data.data.email;
-                            const nickName = res.data.data.nickName;
-                            console.log("yonghu 信息---"+email+nickName)
-                            wx.setStorageSync('nickName', nickName)
-                            wx.setStorageSync('email', email)
+  //           wx.cloud.callContainer({
+  //             config: {
+  //               env: "prod-8ga1z8a47d2e61f1"
+  //             },
+  //             path: "/api/user/miniLogin",
+  //             header: {
+  //              'content-type': 'application/json',
+  //                   'openid': "",
+  //               "X-WX-SERVICE": "golang-vvm6"
+  //             },
+  //             method: "POST",
+  //             data: {
+  //                code: code,
+  //                           userInfo: userInfo
+  //             },
+  //             success: function(res) {
+  //                    console.log(res.data.data)
+  //                           // 登录成功，后端返回了用户标识1
+  //                           const userId = res.data.data.openid;
+  //                           const email = res.data.data.email;
+  //                           const nickName = res.data.data.nickName;
+  //                           console.log("yonghu 信息---"+email+nickName)
+  //                           wx.setStorageSync('nickName', nickName)
+  //                           wx.setStorageSync('email', email)
             
-                             console.log(userId) 
-                            // 将用户标识存储在本地，以便后续请求使用
-                            wx.setStorageSync('openid', userId);
-                            // 登录成功后的跳转或其他操作
-                            // ...
-              },
-              fail: function(err) {
-                // 失败回调函数
-                console.error("API调用失败", err);
-              }
-            });
+  //                            console.log(userId) 
+  //                           // 将用户标识存储在本地，以便后续请求使用
+  //                           wx.setStorageSync('openid', userId);
+  //                           // 登录成功后的跳转或其他操作
+  //                           // ...
+  //             },
+  //             fail: function(err) {
+  //               // 失败回调函数
+  //               console.error("API调用失败", err);
+  //             }
+  //           });
             
-            // 将 code 和用户信息发送到后端进行登录验证
-            // wx.request({
-            //   url: domain+'api/user/miniLogin', // 后端登录接口的 URL
-            //   method: 'POST',
-            //   header: {
-            //     'content-type': 'application/json',
-            //     'openid': wx.getStorageSync('openid') // 将统一的token参数放在header中
-            //   },
-            //   data: {
-            //     code: code,
-            //     userInfo: userInfo
-            //   },
-            //   success: function (res) {
-            //     console.log(res.data.data)
-            //     // 登录成功，后端返回了用户标识
-            //     const userId = res.data.data.openid;
-            //     const email = res.data.data.email;
-            //     const nickName = res.data.data.nickName;
-            //     console.log("yonghu 信息---"+email+nickName)
-            //     wx.setStorageSync('nickName', nickName)
-            //     wx.setStorageSync('email', email)
+  //           // 将 code 和用户信息发送到后端进行登录验证
+  //           // wx.request({
+  //           //   url: domain+'api/user/miniLogin', // 后端登录接口的 URL
+  //           //   method: 'POST',
+  //           //   header: {
+  //           //     'content-type': 'application/json',
+  //           //     'openid': wx.getStorageSync('openid') // 将统一的token参数放在header中
+  //           //   },
+  //           //   data: {
+  //           //     code: code,
+  //           //     userInfo: userInfo
+  //           //   },
+  //           //   success: function (res) {
+  //           //     console.log(res.data.data)
+  //           //     // 登录成功，后端返回了用户标识
+  //           //     const userId = res.data.data.openid;
+  //           //     const email = res.data.data.email;
+  //           //     const nickName = res.data.data.nickName;
+  //           //     console.log("yonghu 信息---"+email+nickName)
+  //           //     wx.setStorageSync('nickName', nickName)
+  //           //     wx.setStorageSync('email', email)
 
-            //      console.log(userId) 
-            //     // 将用户标识存储在本地，以便后续请求使用
-            //     wx.setStorageSync('openid', userId);
-            //     // 登录成功后的跳转或其他操作
-            //     // ...
-            //   },
-            //   fail: function (err) {
-            //     // 登录失败的处理
-            //     // ...
-            //   }
-            // });
-          },
-          fail: function (err) {
-            // 获取用户信息失败的处理
-            // ...
-          }
-        });
-      } else {
-        // 登录失败的处理
-        // ...
-      }
-    },
-    fail: function (err) {
-      // 登录失败的处理
-      // ...
-    }
-  });
+  //           //      console.log(userId) 
+  //           //     // 将用户标识存储在本地，以便后续请求使用
+  //           //     wx.setStorageSync('openid', userId);
+  //           //     // 登录成功后的跳转或其他操作
+  //           //     // ...
+  //           //   },
+  //           //   fail: function (err) {
+  //           //     // 登录失败的处理
+  //           //     // ...
+  //           //   }
+  //           // });
+  //         },
+  //         fail: function (err) {
+  //           // 获取用户信息失败的处理
+  //           // ...
+  //         }
+  //       });
+  //     } else {
+  //       // 登录失败的处理
+  //       // ...
+  //     }
+  //   },
+  //   fail: function (err) {
+  //     // 登录失败的处理
+  //     // ...
+  //   }
+  // });
 }
 
 

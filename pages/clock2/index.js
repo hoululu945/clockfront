@@ -7,6 +7,7 @@ Page({
     productPrice: '',
     productDescription: '',
     imageUrl: '',
+    tempImageUrl:"",
     title:'',
     detail:'',
     domain:'',
@@ -213,6 +214,14 @@ Page({
             tipTime:this.data.date+" "+this.data.time+":00",
             tipImage:imageUrl,
             title
+          }
+          if(data["tipImage"] === "" || data["tipImage"]===undefined){
+            wx.showModal({
+              title: '图片必传',
+              content: '请填写完整的参数', 
+              showCancel: false
+            });
+            return;
           }
     utils.requestAdd(this,data,"/api/clock/add",function(err, res,thisP) {
       if (err) {

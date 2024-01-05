@@ -1,0 +1,13 @@
+<view class="container">
+  <image src="{{bimageUrl}}" class="splash-image"></image>
+  <view wx:if="{{jump}}" class="skip-wrapper">
+    <button class="skip-button" bindtap="onSkip">跳过</button>
+  </view>
+
+  <view class="avatar-nickname-wrapper">
+    <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+      <image class="avatar" src="{{avatarUrl}}" id="imagesUrl" ></image>
+    </button> 
+    <input type="text" class="weui-input" placeholder="请输入昵称" id="nickname" bindinput="onNicknameInput" value="{{nickname}}"/>
+  </view>
+</view>
